@@ -202,7 +202,10 @@ public class do_Bluetooth_Model extends do_Bluetooth_MAbstract implements DoActi
 					JSONObject jsonNode = new JSONObject();
 					try {
 						jsonNode.put("address", device.getAddress());
-						jsonNode.put("name", device.getName());
+						if (null == device.getName())
+							jsonNode.put("name", "");
+						else
+							jsonNode.put("name", device.getName());
 						jsonNode.put("RSSI", rssi);
 					} catch (Exception _err) {
 						DoServiceContainer.getLogEngine().writeError("do_Bluetooth_Model scan event \n\t", _err);
@@ -262,7 +265,6 @@ public class do_Bluetooth_Model extends do_Bluetooth_MAbstract implements DoActi
 		}
 		_scriptEngine.callback(_callbackFuncName, _invokeResult);
 	}
-
 
 	public void startScan(JSONObject _dictParas, DoIScriptEngine _scriptEngine, String _callbackFuncName) throws Exception {
 		callBack(mBluetoothAdapter.startLeScan(mLeScanCallback), _scriptEngine, _callbackFuncName);
