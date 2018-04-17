@@ -215,6 +215,7 @@ public class do_Bluetooth_Model extends do_Bluetooth_MAbstract implements DoActi
 			});
 		}
 	};
+	private boolean isBind = false;
 
 	/**
 	 * 打开中心设备蓝牙；
@@ -252,7 +253,7 @@ public class do_Bluetooth_Model extends do_Bluetooth_MAbstract implements DoActi
 			callBack(0, _scriptEngine, _callbackFuncName);
 			mContext.registerReceiver(mGattUpdateReceiver, makeGattUpdateIntentFilter());
 			Intent gattServiceIntent = new Intent(mContext, DoBluetoothLeService.class);
-			mContext.bindService(gattServiceIntent, mServiceConnection, Context.BIND_AUTO_CREATE);
+			isBind = mContext.bindService(gattServiceIntent, mServiceConnection, Context.BIND_AUTO_CREATE);
 		}
 	}
 
@@ -416,7 +417,10 @@ public class do_Bluetooth_Model extends do_Bluetooth_MAbstract implements DoActi
 	@Override
 	public void dispose() {
 		super.dispose();
-		mContext.unbindService(mServiceConnection);
-		mBluetoothLeService = null;
+		if (isBind) {
+			mContext.unbindService(mServiceConnection);
+			mBluetoothLeService = null;
+			isBind = false;
+		}
 	}
 }

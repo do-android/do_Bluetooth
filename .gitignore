@@ -7,3 +7,4 @@ proguard/
 *.classpath
 /doExt_do_Bluetooth/libs/docore.jar
 /doExt_do_Bluetooth/do_build.xml
+/doExt_do_Bluetooth/doExt_do_Bluetooth.zip
